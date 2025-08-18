@@ -21,7 +21,7 @@ npm install eleventy-plugin-components
 
 ### 1. Add the Plugin
 
-<details>
+<details open>
 <summary>View configuration code</summary>
 
 ```javascript
@@ -73,7 +73,7 @@ background: light
 
 In any template, use the `renderComponent` filter:
 
-<details>
+<details open>
 <summary>View usage example</summary>
 
 ```njk
@@ -95,13 +95,13 @@ In any template, use the `renderComponent` filter:
 
 </details>
 
-> **Note:** The `renderComponent` filter accepts a template language parameter (`"njk"`, `"liquid"`, `"vto"`, etc.). If not specified, it defaults to `"liquid"`.
+> **Note:** The `renderComponent` filter accepts a template language parameter (`"njk"`, `"liquid"`, `"vto"`, etc.) and can process both single components and arrays of components. If no template language is specified, it defaults to `"liquid"`.
 
 ## Configuration
 
 ### Default Options
 
-<details>
+<details open>
 <summary>View default options</summary>
 
 ```javascript
@@ -124,6 +124,33 @@ const defaultOptions = {
 
 Define components directly in your page's frontmatter:
 
+#### Liquid (Frontmatter)
+
+<details open>
+<summary>View Liquid frontmatter example</summary>
+
+```liquid
+---
+title: My Page
+components:
+  - type: callout
+    heading: Welcome!
+    description: Thanks for visiting our site
+    background: primary
+  - type: text-and-image
+    heading: About Us
+    description: Learn more about our company
+    image: /assets/images/about.jpg
+    imageAlt: About our company
+---
+
+<main>
+  {{ components | renderComponent: "liquid" }}
+</main>
+```
+
+</details>
+
 #### Nunjucks (Frontmatter)
 
 <details>
@@ -145,38 +172,7 @@ components:
 ---
 
 <main>
-  {%- for item in components -%}
-    {{- item | renderComponent("njk") | safe -}}
-  {%- endfor -%}
-</main>
-```
-
-</details>
-
-#### Liquid (Frontmatter)
-
-<details>
-<summary>View Liquid frontmatter example</summary>
-
-```liquid
----
-title: My Page
-components:
-  - type: callout
-    heading: Welcome!
-    description: Thanks for visiting our site
-    background: primary
-  - type: text-and-image
-    heading: About Us
-    description: Learn more about our company
-    image: /assets/images/about.jpg
-    imageAlt: About our company
----
-
-<main>
-  {% for item in components %}
-    {{ item | renderComponent: "liquid" }}
-  {% endfor %}
+  {{ components | renderComponent("njk") | safe }}
 </main>
 ```
 
@@ -203,9 +199,7 @@ components:
 ---
 
 <main>
-  {{ for item of components }}
-    {{ item |> renderComponent("vto") |> safe }}
-  {{ /for }}
+  {{ components |> renderComponent("vto") |> safe }}
 </main>
 ```
 
@@ -214,6 +208,26 @@ components:
 ### Method 2: Inline Definition
 
 Define components inline within your template:
+
+#### Liquid (Inline Definition)
+
+<details open>
+<summary>View Liquid inline definition example</summary>
+
+```liquid
+{% assign heroComponent = site.data.hero %}
+{% assign features = site.data.features %}
+
+<main>
+  {{ heroComponent | renderComponent: "liquid" }}
+  
+  <section class="features">
+    {{ features | renderComponent: "liquid" }}
+  </section>
+</main>
+```
+
+</details>
 
 #### Nunjucks (Inline Definition)
 
@@ -255,31 +269,7 @@ Define components inline within your template:
   {{ heroComponent | renderComponent("njk") | safe }}
   
   <section class="features">
-    {%- for feature in features -%}
-      {{- feature | renderComponent("njk") | safe -}}
-    {%- endfor -%}
-  </section>
-</main>
-```
-
-</details>
-
-#### Liquid (Inline Definition)
-
-<details>
-<summary>View Liquid inline definition example</summary>
-
-```liquid
-{% assign heroComponent = site.data.hero %}
-{% assign features = site.data.features %}
-
-<main>
-  {{ heroComponent | renderComponent: "liquid" }}
-  
-  <section class="features">
-    {% for feature in features %}
-      {{ feature | renderComponent: "liquid" }}
-    {% endfor %}
+    {{ features | renderComponent("njk") | safe }}
   </section>
 </main>
 ```
@@ -320,9 +310,7 @@ Define components inline within your template:
   {{ heroComponent |> renderComponent("vto") |> safe }}
   
   <section class="features">
-    {{ for feature of features }}
-      {{ feature |> renderComponent("vto") |> safe }}
-    {{ /for }}
+    {{ features |> renderComponent("vto") |> safe }}
   </section>
 </main>
 ```
@@ -335,7 +323,7 @@ Store component data in separate JSON files for better organization:
 
 #### Data File: `src/_data/homepage.json`
 
-<details>
+<details open>
 <summary>View data file example</summary>
 
 ```json
@@ -390,6 +378,25 @@ Store component data in separate JSON files for better organization:
 
 #### Template Usage
 
+**Liquid (`index.liquid`):**
+
+<details open>
+<summary>View Liquid template usage</summary>
+
+```liquid
+---
+title: Homepage
+---
+
+<main>
+  {{ homepage.hero | renderComponent: "liquid" }}
+  
+  {{ homepage.sections | renderComponent: "liquid" }}
+</main>
+```
+
+</details>
+
 **Nunjucks (`index.njk`):**
 
 <details>
@@ -403,30 +410,7 @@ title: Homepage
 <main>
   {{ homepage.hero | renderComponent("njk") | safe }}
   
-  {%- for section in homepage.sections -%}
-    {{- section | renderComponent("njk") | safe -}}
-  {%- endfor -%}
-</main>
-```
-
-</details>
-
-**Liquid (`index.liquid`):**
-
-<details>
-<summary>View Liquid template usage</summary>
-
-```liquid
----
-title: Homepage
----
-
-<main>
-  {{ homepage.hero | renderComponent: "liquid" }}
-  
-  {% for section in homepage.sections %}
-    {{ section | renderComponent: "liquid" }}
-  {% endfor %}
+  {{ homepage.sections | renderComponent("njk") | safe }}
 </main>
 ```
 
@@ -445,9 +429,7 @@ title: Homepage
 <main>
   {{ homepage.hero |> renderComponent("vto") |> safe }}
   
-  {{ for section of homepage.sections }}
-    {{ section |> renderComponent("vto") |> safe }}
-  {{ /for }}
+  {{ homepage.sections |> renderComponent("vto") |> safe }}
 </main>
 ```
 
@@ -457,7 +439,7 @@ title: Homepage
 
 Components should follow this structure:
 
-<details>
+<details open>
 <summary>View component structure example</summary>
 
 ```njk
@@ -628,7 +610,7 @@ The plugin handles errors gracefully:
 
 1. **Check component title matches type**:
 
-<details>
+<details open>
 <summary>View component title matching example</summary>
 
 ```njk
@@ -663,8 +645,8 @@ type: "my-component"  <!-- must match! -->
 
 Make sure to specify the correct template language parameter for your template engine:
 
-- **Nunjucks**: `{{ item | renderComponent("njk") | safe }}`
 - **Liquid**: `{{ item | renderComponent: "liquid" }}` (auto-escaped by default)
+- **Nunjucks**: `{{ item | renderComponent("njk") | safe }}`
 - **Vento**: `{{ item |> renderComponent("vto") |> safe }}`
 
 The template language parameter defaults to `"liquid"` if not specified.
@@ -700,7 +682,7 @@ Matches content items to component templates and renders them.
 
 **Usage:**
 
-<details>
+<details open>
 <summary>View renderComponent filter usage</summary>
 
 ```njk

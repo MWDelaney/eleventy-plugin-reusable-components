@@ -41,14 +41,12 @@ export function addFilters(eleventyConfig, options) {
    *   description: "This is important"
    * };
    *
-   * // Template usage:
+   * // Template usage with single item:
    * {{ item | renderComponent("njk") | safe }}
    *
    * @example
-   * // Template usage in a loop:
-   * {%- for item in components -%}
-   *   {{- item | renderComponent("njk") | safe -}}
-   * {%- endfor -%}
+   * // Template usage with array (no loop needed):
+   * {{ components | renderComponent("njk") | safe }}
    *
    * @workflow
    * 1. Validates input item has required 'type' property
