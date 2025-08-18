@@ -544,7 +544,7 @@ The plugin includes built-in CSS and JS bundling:
 
 ### CSS Bundling
 
-<details>
+<details open>
 <summary>View CSS bundling example</summary>
 
 ```liquid
@@ -556,33 +556,12 @@ The plugin includes built-in CSS and JS bundling:
 
 ### JS Bundling
 
-<details>
+<details open>
 <summary>View JS bundling example</summary>
 
 ```liquid
 <!-- In your layout template -->
 <script src="{% getBundleFileUrl 'componentJs' %}"></script>
-```
-
-</details>
-
-### Adding Assets to Bundles
-
-<details>
-<summary>View assets bundling examples</summary>
-
-```liquid
-<!-- Add CSS -->
-{% css %}
-.callout { border: 1px solid #ccc; }
-{% endcss %}
-
-<!-- Add JS -->
-{% js %}
-document.addEventListener('DOMContentLoaded', function() {
-  // Component JavaScript
-});
-{% endjs %}
 ```
 
 </details>
