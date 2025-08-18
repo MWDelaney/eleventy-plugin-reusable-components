@@ -90,10 +90,12 @@ In any template, use the `renderComponent` filter:
   background: "warning"
 } -%}
 
-{{ myCallout | renderComponent | renderContent("njk", myCallout) | safe }}
+{{ myCallout | renderComponent("njk") | safe }}
 ```
 
 </details>
+
+> **Note:** The `renderComponent` filter accepts a template language parameter (`"njk"`, `"liquid"`, `"vto"`, etc.). If not specified, it defaults to `"liquid"`.
 
 ## Configuration
 
@@ -122,7 +124,7 @@ const defaultOptions = {
 
 Define components directly in your page's frontmatter:
 
-#### Nunjucks
+#### Nunjucks (Frontmatter)
 
 <details>
 <summary>View Nunjucks frontmatter example</summary>
@@ -144,14 +146,14 @@ components:
 
 <main>
   {%- for item in components -%}
-    {{- item | renderComponent | renderContent("njk", item) | safe -}}
+    {{- item | renderComponent("njk") | safe -}}
   {%- endfor -%}
 </main>
 ```
 
 </details>
 
-#### Liquid
+#### Liquid (Frontmatter)
 
 <details>
 <summary>View Liquid frontmatter example</summary>
@@ -173,14 +175,14 @@ components:
 
 <main>
   {% for item in components %}
-    {{ item | renderComponent | renderContent: "liquid", item }}
+    {{ item | renderComponent: "liquid" }}
   {% endfor %}
 </main>
 ```
 
 </details>
 
-#### Vento
+#### Vento (Frontmatter)
 
 <details>
 <summary>View Vento frontmatter example</summary>
@@ -202,7 +204,7 @@ components:
 
 <main>
   {{ for item of components }}
-    {{ item |> renderComponent |> renderContent("vto", item) |> safe }}
+    {{ item |> renderComponent("vto") |> safe }}
   {{ /for }}
 </main>
 ```
@@ -213,7 +215,7 @@ components:
 
 Define components inline within your template:
 
-#### Nunjucks
+#### Nunjucks (Inline Definition)
 
 <details>
 <summary>View Nunjucks inline definition example</summary>
@@ -250,11 +252,11 @@ Define components inline within your template:
 ] -%}
 
 <main>
-  {{ heroComponent | renderComponent | renderContent("njk", heroComponent) | safe }}
+  {{ heroComponent | renderComponent("njk") | safe }}
   
   <section class="features">
     {%- for feature in features -%}
-      {{- feature | renderComponent | renderContent("njk", feature) | safe -}}
+      {{- feature | renderComponent("njk") | safe -}}
     {%- endfor -%}
   </section>
 </main>
@@ -262,7 +264,7 @@ Define components inline within your template:
 
 </details>
 
-#### Liquid
+#### Liquid (Inline Definition)
 
 <details>
 <summary>View Liquid inline definition example</summary>
@@ -272,11 +274,11 @@ Define components inline within your template:
 {% assign features = site.data.features %}
 
 <main>
-  {{ heroComponent | renderComponent | renderContent: "liquid", heroComponent }}
+  {{ heroComponent | renderComponent: "liquid" }}
   
   <section class="features">
     {% for feature in features %}
-      {{ feature | renderComponent | renderContent: "liquid", feature }}
+      {{ feature | renderComponent: "liquid" }}
     {% endfor %}
   </section>
 </main>
@@ -284,7 +286,7 @@ Define components inline within your template:
 
 </details>
 
-#### Vento
+#### Vento (Inline Definition)
 
 <details>
 <summary>View Vento inline definition example</summary>
@@ -315,11 +317,11 @@ Define components inline within your template:
 ] }}
 
 <main>
-  {{ heroComponent |> renderComponent |> renderContent("vto", heroComponent) |> safe }}
+  {{ heroComponent |> renderComponent("vto") |> safe }}
   
   <section class="features">
     {{ for feature of features }}
-      {{ feature |> renderComponent |> renderContent("vto", feature) |> safe }}
+      {{ feature |> renderComponent("vto") |> safe }}
     {{ /for }}
   </section>
 </main>
@@ -386,7 +388,7 @@ Store component data in separate JSON files for better organization:
 
 </details>
 
-#### Template Usage:
+#### Template Usage
 
 **Nunjucks (`index.njk`):**
 
@@ -399,10 +401,10 @@ title: Homepage
 ---
 
 <main>
-  {{ homepage.hero | renderComponent | renderContent("njk", homepage.hero) | safe }}
+  {{ homepage.hero | renderComponent("njk") | safe }}
   
   {%- for section in homepage.sections -%}
-    {{- section | renderComponent | renderContent("njk", section) | safe -}}
+    {{- section | renderComponent("njk") | safe -}}
   {%- endfor -%}
 </main>
 ```
@@ -420,10 +422,10 @@ title: Homepage
 ---
 
 <main>
-  {{ homepage.hero | renderComponent | renderContent: "liquid", homepage.hero }}
+  {{ homepage.hero | renderComponent: "liquid" }}
   
   {% for section in homepage.sections %}
-    {{ section | renderComponent | renderContent: "liquid", section }}
+    {{ section | renderComponent: "liquid" }}
   {% endfor %}
 </main>
 ```
@@ -441,10 +443,10 @@ title: Homepage
 ---
 
 <main>
-  {{ homepage.hero |> renderComponent |> renderContent("vto", homepage.hero) |> safe }}
+  {{ homepage.hero |> renderComponent("vto") |> safe }}
   
   {{ for section of homepage.sections }}
-    {{ section |> renderComponent |> renderContent("vto", section) |> safe }}
+    {{ section |> renderComponent("vto") |> safe }}
   {{ /for }}
 </main>
 ```
@@ -572,7 +574,7 @@ Then reference in templates:
     type: "debug-panel",
     data: someData
   } -%}
-  {{ debugComponent | renderComponent | renderContent("njk", debugComponent) | safe }}
+  {{ debugComponent | renderComponent("njk") | safe }}
 {%- endif -%}
 ```
 
@@ -600,7 +602,7 @@ Then reference in templates:
   ]
 } -%}
 
-{{ cardGrid | renderComponent | renderContent("njk", cardGrid) | safe }}
+{{ cardGrid | renderComponent("njk") | safe }}
 ```
 
 </details>
@@ -659,11 +661,13 @@ type: "my-component"  <!-- must match! -->
 
 ### Template Language Issues
 
-Make sure to use the correct syntax for your template language:
+Make sure to specify the correct template language parameter for your template engine:
 
-- **Nunjucks**: `renderContent("njk", data)`
-- **Liquid**: `renderContent: "liquid", data`  
-- **Vento**: `renderContent("vto", data)`
+- **Nunjucks**: `{{ item | renderComponent("njk") | safe }}`
+- **Liquid**: `{{ item | renderComponent: "liquid" }}` (auto-escaped by default)
+- **Vento**: `{{ item |> renderComponent("vto") |> safe }}`
+
+The template language parameter defaults to `"liquid"` if not specified.
 
 ## API Reference
 
@@ -683,13 +687,16 @@ Make sure to use the correct syntax for your template language:
 
 #### `renderComponent`
 
-Matches content items to component templates.
+Matches content items to component templates and renders them.
 
 **Parameters:**
-- `item` (Object): Content item with `type` property
 
-**Returns:**  
-- `string`: Raw component template or empty string
+- `item` (Object|Array): Content item(s) with `type` property
+- `templateLang` (string): Optional. Template language ("njk", "liquid", "vto", etc.). Defaults to "liquid"
+
+**Returns:**
+
+- `string`: Fully rendered HTML content or empty string
 
 **Usage:**
 
@@ -697,7 +704,7 @@ Matches content items to component templates.
 <summary>View renderComponent filter usage</summary>
 
 ```njk
-{{ item | renderComponent | renderContent("njk", item) | safe }}
+{{ item | renderComponent("njk") | safe }}
 ```
 
 </details>

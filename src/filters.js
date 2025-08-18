@@ -20,11 +20,12 @@ export function addFilters(eleventyConfig, options) {
    * is performed by comparing the slugified version of the component's title
    * (from frontmatter) with the slugified version of the item's type.
    *
-   * @param {Object} item - The content item to find a component template for
-   * @param {string} item.type - Required. The component type identifier (e.g., "callout", "hero", "text-and-image")
-   * @param {*} [...item.props] - Optional. Any additional properties that will be passed to the component when rendered
+   * @param {Object|Array} items - The content item(s) to find component templates for
+   * @param {string} items.type - Required. The component type identifier (e.g., "callout", "hero", "text-and-image")
+   * @param {*} [...items.props] - Optional. Any additional properties that will be passed to the component when rendered
+   * @param {string} templateLang - Optional. Template language to use for rendering ("liquid", "njk", "vto", etc.). Defaults to "liquid"
    *
-   * @returns {string} The raw template content of the matching component, or empty string if no match found
+   * @returns {string} The fully rendered HTML content of the matching component(s), or empty string if no match found
    *
    * @example
    * // Component file: src/assets/components/callout.njk
@@ -41,12 +42,12 @@ export function addFilters(eleventyConfig, options) {
    * };
    *
    * // Template usage:
-   * {{ item | renderComponent | renderContent("njk", item) | safe }}
+   * {{ item | renderComponent("njk") | safe }}
    *
    * @example
    * // Template usage in a loop:
    * {%- for item in components -%}
-   *   {{- item | renderComponent | renderContent("njk", item) | safe -}}
+   *   {{- item | renderComponent("njk") | safe -}}
    * {%- endfor -%}
    *
    * @workflow
@@ -54,13 +55,13 @@ export function addFilters(eleventyConfig, options) {
    * 2. Accesses the Eleventy components collection
    * 3. Loops through all available component templates
    * 4. Compares slugified component title with slugified item type
-   * 5. Returns raw template content of first matching component
-   * 6. Template then uses renderContent filter to render with item data
+   * 5. Renders the matching component template with item data
+   * 6. Returns fully rendered HTML content
    *
    * @dependencies
    * - Requires components collection to be populated (handled by plugin)
    * - Requires Eleventy's built-in slugify filter
-   * - Designed to work with EleventyRenderPlugin's renderContent filter
+   * - Uses EleventyRenderPlugin's renderContent filter internally for rendering
    *
    * @matching-logic
    * Component matching uses case-insensitive, URL-safe slug comparison:
@@ -82,8 +83,21 @@ export function addFilters(eleventyConfig, options) {
    * @see {@link https://www.11ty.dev/docs/filters/} Eleventy Filters Documentation
    * @see {@link https://www.11ty.dev/docs/plugins/render/} Eleventy Render Plugin Documentation
    */
-  eleventyConfig.addFilter("renderComponent", function (item) {
-    if (!item || !item.type) {
+
+  // Render components filter - returns matched component templates
+  // Render components filter - returns matched component templates
+  eleventyConfig.addFilter("renderComponent", async function (items, templateLang = "liquid") {
+    if (!items) {
+      return '';
+    }
+
+    // Normalize input to always be an array
+    const itemsArray = Array.isArray(items) ? items : [items];
+
+    // Filter out any items without a type
+    const validItems = itemsArray.filter(item => item && item.type);
+
+    if (validItems.length === 0) {
       return '';
     }
 
@@ -93,20 +107,28 @@ export function addFilters(eleventyConfig, options) {
     }
 
     const slugifyFilter = eleventyConfig.getFilter("slugify");
+    const renderFilter = eleventyConfig.getFilter("renderContent");
+    const renderedComponents = [];
 
-    // Find the matching component in the collections
-    for (const component of collections.components) {
-      if (component.data && component.data.title) {
-        const componentSlug = slugifyFilter(component.data.title);
-        const itemSlug = slugifyFilter(item.type);
+    // Process each item
+    for (const item of validItems) {
+      // Find the matching component in the collections
+      for (const component of collections.components) {
+        if (component.data && component.data.title) {
+          const componentSlug = slugifyFilter(component.data.title);
+          const itemSlug = slugifyFilter(item.type);
 
-        if (componentSlug === itemSlug) {
-          // Return the component's rawInput - template will handle rendering with item data
-          return component.rawInput;
+          if (componentSlug === itemSlug) {
+            // Render the component's rawInput with item data using the specified template language
+            const rendered = await renderFilter.call(this, component.rawInput, templateLang, item);
+            renderedComponents.push(rendered);
+            break; // Move to next item after finding a match
+          }
         }
       }
     }
 
-    return '';
-  });
+    // Join all rendered components with newlines
+    return renderedComponents.join('\n');
+  })
 }
