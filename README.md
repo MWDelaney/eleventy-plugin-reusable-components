@@ -443,7 +443,31 @@ title: Homepage
 
 </details>
 
-### Method 4: Components with Bundled Assets
+## Component Structure
+
+Components should follow this structure:
+
+<details open>
+<summary>View component structure example</summary>
+
+```liquid
+---
+title: ComponentName
+# Default values
+heading: "default heading"
+description: "default description"
+---
+
+<!-- Component template here -->
+<div class="component-name">
+  <h2>{{ heading }}</h2>
+  <p>{{ description }}</p>
+</div>
+```
+
+</details>
+
+### Components with Bundled Assets
 
 Create components with their own CSS and JS that get automatically bundled:
 
@@ -494,30 +518,6 @@ background: warning
 {% js %}
 console.log('🪐');
 {% endjs %}
-```
-
-</details>
-
-## Component Structure
-
-Components should follow this structure:
-
-<details open>
-<summary>View component structure example</summary>
-
-```liquid
----
-title: ComponentName
-# Default values
-heading: "default heading"
-description: "default description"
----
-
-<!-- Component template here -->
-<div class="component-name">
-  <h2>{{ heading }}</h2>
-  <p>{{ description }}</p>
-</div>
 ```
 
 </details>
