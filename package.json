@@ -1,0 +1,24 @@
+{
+  "name": "eleventy-plugin-components",
+  "version": "3.0.1",
+  "description": "Eleventy plugin for components",
+  "main": ".eleventy.js",
+  "type": "module",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mwdelaney/eleventy-plugin-components.git"
+  },
+  "author": "MWDelaney (https://github.com/mwdelaney)",
+  "license": "MIT",
+  "keywords": [
+    "eleventy",
+    "plugin",
+    "components"
+  ],
+  "peerDependencies": {
+    "@11ty/eleventy": "^3.0.0"
+  }
+}
