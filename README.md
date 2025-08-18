@@ -39,7 +39,7 @@ export default function(eleventyConfig) {
 
 Create a component file at `src/components/callout.njk`:
 
-<details>
+<details open>
 <summary>View component template</summary>
 
 ```njk
