@@ -37,12 +37,12 @@ export default function(eleventyConfig) {
 
 ### 2. Create a Component
 
-Create a component file at `src/components/callout.njk`:
+Create a component file at `src/components/callout.liquid`:
 
 <details open>
 <summary>View component template</summary>
 
-```njk
+```liquid
 ---
 title: Callout
 
@@ -57,13 +57,13 @@ background: light
 <div class="callout callout--{{ background }}">
   <h3 class="callout__heading">{{ heading }}</h3>
   <p class="callout__description">{{ description }}</p>
-  {%- if links -%}
+  {% if links %}
     <div class="callout__links">
-      {%- for link in links -%}
+      {% for link in links %}
         <a href="{{ link.linkUrl }}" class="callout__link">{{ link.linkText }}</a>
-      {%- endfor -%}
+      {% endfor %}
     </div>
-  {%- endif -%}
+  {% endif %}
 </div>
 ```
 
@@ -76,21 +76,20 @@ In any template, use the `renderComponent` filter:
 <details open>
 <summary>View usage example</summary>
 
-```njk
-{%- set myCallout = {
-  type: "callout",
-  heading: "Important Notice",
-  description: "This is a callout example",
-  links: [
-    {
-      linkUrl: "#",
-      linkText: "Learn more"
-    }
-  ],
-  background: "warning"
-} -%}
+```liquid
+---
+title: My Page
+callout:
+  type: callout
+  heading: Important Notice
+  description: This is a callout example
+  links:
+    - linkUrl: "#"
+      linkText: Learn more
+  background: warning
+---
 
-{{ myCallout | renderComponent("njk") | safe }}
+{{ callout | renderComponent: "liquid" }}
 ```
 
 </details>
@@ -215,8 +214,27 @@ Define components inline within your template:
 <summary>View Liquid inline definition example</summary>
 
 ```liquid
-{% assign heroComponent = site.data.hero %}
-{% assign features = site.data.features %}
+{% assign heroComponent = {
+  type: "hero",
+  heading: "Welcome to Our Site",
+  description: "Thanks for visiting! We're excited to share our content with you.",
+  background: "primary"
+} %}
+
+{% assign features = [
+  {
+    type: "callout",
+    heading: "Fast Performance",
+    description: "Built for speed and efficiency.",
+    background: "success"
+  },
+  {
+    type: "callout", 
+    heading: "Easy to Use",
+    description: "Simple and intuitive interface.",
+    background: "info"
+  }
+] %}
 
 <main>
   {{ heroComponent | renderComponent: "liquid" }}
@@ -237,31 +255,23 @@ Define components inline within your template:
 ```njk
 {%- set heroComponent = {
   type: "hero",
-  heading: "Build Amazing Sites",
-  subheading: "With Eleventy and Components",
-  image: "/assets/images/hero.jpg",
-  ctaText: "Get Started",
-  ctaUrl: "/docs/"
+  heading: "Welcome to Our Site",
+  description: "Thanks for visiting! We're excited to share our content with you.",
+  background: "primary"
 } -%}
 
 {%- set features = [
   {
-    type: "feature-card",
-    icon: "⚡",
-    title: "Fast",
-    description: "Lightning-fast static sites"
+    type: "callout",
+    heading: "Fast Performance",
+    description: "Built for speed and efficiency.",
+    background: "success"
   },
   {
-    type: "feature-card",
-    icon: "🧩",
-    title: "Modular",
-    description: "Reusable component system"
-  },
-  {
-    type: "feature-card",
-    icon: "🎨",
-    title: "Flexible",
-    description: "Works with any template language"
+    type: "callout",
+    heading: "Easy to Use", 
+    description: "Simple and intuitive interface.",
+    background: "info"
   }
 ] -%}
 
@@ -284,25 +294,23 @@ Define components inline within your template:
 ```vento
 {{ set heroComponent = {
   type: "hero",
-  heading: "Build Amazing Sites",
-  subheading: "With Eleventy and Components",
-  image: "/assets/images/hero.jpg",
-  ctaText: "Get Started",
-  ctaUrl: "/docs/"
+  heading: "Welcome to Our Site",
+  description: "Thanks for visiting! We're excited to share our content with you.",
+  background: "primary"
 } }}
 
 {{ set features = [
   {
-    type: "feature-card",
-    icon: "⚡",
-    title: "Fast",
-    description: "Lightning-fast static sites"
+    type: "callout",
+    heading: "Fast Performance",
+    description: "Built for speed and efficiency.",
+    background: "success"
   },
   {
-    type: "feature-card",
-    icon: "🧩",
-    title: "Modular",
-    description: "Reusable component system"
+    type: "callout",
+    heading: "Easy to Use",
+    description: "Simple and intuitive interface.",
+    background: "info"
   }
 ] }}
 
@@ -435,6 +443,61 @@ title: Homepage
 
 </details>
 
+### Method 4: Components with Bundled Assets
+
+Create components with their own CSS and JS that get automatically bundled:
+
+<details open>
+<summary>View component with bundled assets example</summary>
+
+**Component file: `src/components/text-and-image.liquid`**
+
+```liquid
+---
+title: Text and Image
+
+# Default values
+heading: Text and image component
+description: A component that combines text and an image.
+image: /assets/images/possums.jpg
+imageAlt: A cute possum
+imagePosition: left
+background: warning
+---
+
+<!-- Component HTML, using the default values above -->
+<section class="block block-text-and-image background-{{ background }} text-bg-{{ background }} py-5">
+  <div class="container px-5">
+    <div class="row row-cols-2 align-items-center">
+      <article class="col">
+        <h2>{{ heading }}</h2>
+        {{ description }}
+      </article>
+      <figure class="col">
+        <img src="{{ image }}" class="img-fluid rounded shadow" alt="{{ imageAlt }}" />
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- Component CSS -->
+{% css %}
+.block-text-and-image {
+  figure img {
+    --bs-border-radius: 1rem;
+    transform: rotate(6deg);
+  }
+}
+{% endcss %}
+
+<!-- Component JS -->
+{% js %}
+console.log('🪐');
+{% endjs %}
+```
+
+</details>
+
 ## Component Structure
 
 Components should follow this structure:
@@ -442,7 +505,7 @@ Components should follow this structure:
 <details open>
 <summary>View component structure example</summary>
 
-```njk
+```liquid
 ---
 title: ComponentName
 # Default values
@@ -484,9 +547,9 @@ The plugin includes built-in CSS and JS bundling:
 <details>
 <summary>View CSS bundling example</summary>
 
-```njk
+```liquid
 <!-- In your layout template -->
-<link rel="stylesheet" href="{% getBundleFileUrl 'css' %}">
+<link rel="stylesheet" href="{% getBundleFileUrl 'componentCss' %}">
 ```
 
 </details>
@@ -496,9 +559,9 @@ The plugin includes built-in CSS and JS bundling:
 <details>
 <summary>View JS bundling example</summary>
 
-```njk
+```liquid
 <!-- In your layout template -->
-<script src="{% getBundleFileUrl 'js' %}"></script>
+<script src="{% getBundleFileUrl 'componentJs' %}"></script>
 ```
 
 </details>
@@ -508,7 +571,7 @@ The plugin includes built-in CSS and JS bundling:
 <details>
 <summary>View assets bundling examples</summary>
 
-```njk
+```liquid
 <!-- Add CSS -->
 {% css %}
 .callout { border: 1px solid #ccc; }
@@ -524,71 +587,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 </details>
 
-## Advanced Usage
-
-### Custom Collection Name
-
-<details>
-<summary>View custom collection configuration</summary>
-
-```javascript
-eleventyConfig.addPlugin(componentSystem, {
-  collectionName: "widgets"
-});
-```
-
-Then reference in templates:
-
-```njk
-<!-- Components now available in collections.widgets -->
-```
-
-</details>
-
-### Conditional Component Loading
-
-<details>
-<summary>View conditional loading example</summary>
-
-```njk
-{%- if environment.NODE_ENV !== "production" -%}
-  {%- set debugComponent = {
-    type: "debug-panel",
-    data: someData
-  } -%}
-  {{ debugComponent | renderComponent("njk") | safe }}
-{%- endif -%}
-```
-
-</details>
-
-### Nested Components
-
-<details>
-<summary>View nested components example</summary>
-
-```njk
-{%- set cardGrid = {
-  type: "card-grid",
-  cards: [
-    {
-      type: "feature-card",
-      title: "Feature 1",
-      description: "Amazing feature"
-    },
-    {
-      type: "feature-card", 
-      title: "Feature 2",
-      description: "Another great feature"
-    }
-  ]
-} -%}
-
-{{ cardGrid | renderComponent("njk") | safe }}
-```
-
-</details>
-
 ## Error Handling
 
 The plugin handles errors gracefully:
@@ -597,12 +595,6 @@ The plugin handles errors gracefully:
 - **Invalid data**: Returns empty string  
 - **Missing collections**: Returns empty string
 - **Template errors**: Logged to console, returns fallback
-
-## Performance Considerations
-
-- **Component Matching**: O(n) complexity where n = number of components
-- **Caching**: Components are cached by Eleventy's collection system
-- **Bundle Size**: Only used components' assets are included in bundles
 
 ## Troubleshooting
 
@@ -613,7 +605,7 @@ The plugin handles errors gracefully:
 <details open>
 <summary>View component title matching example</summary>
 
-```njk
+```liquid
 <!-- Component file -->
 title: "My Component"  <!-- becomes "my-component" -->
 
@@ -628,11 +620,11 @@ type: "my-component"  <!-- must match! -->
 <details>
 <summary>View component collection debug example</summary>
 
-```njk
+```liquid
 <!-- Debug: List all components -->
-{%- for component in collections.components -%}
+{% for component in collections.components %}
   <p>{{ component.data.title }} → {{ component.data.title | slugify }}</p>
-{%- endfor -%}
+{% endfor %}
 ```
 
 </details>
@@ -679,17 +671,6 @@ Matches content items to component templates and renders them.
 **Returns:**
 
 - `string`: Fully rendered HTML content or empty string
-
-**Usage:**
-
-<details open>
-<summary>View renderComponent filter usage</summary>
-
-```njk
-{{ item | renderComponent("njk") | safe }}
-```
-
-</details>
 
 ## Contributing
 
