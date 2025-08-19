@@ -94,7 +94,7 @@ callout:
 
 </details>
 
-> **Note:** The `renderComponent` filter accepts a template language parameter (`"njk"`, `"liquid"`, `"vto"`, etc.) and can process both single components and arrays of components. If no template language is specified, it defaults to `"liquid"`.
+> **Note:** The `renderComponent` filter accepts a template language parameter (`"njk"`, `"liquid"`, `"vto"`, etc.) and can process both single components and arrays of components. If no template language is specified, it defaults to `"liquid"`. The filter automatically merges component default values with your provided data - any missing fields will use the defaults from the component file.
 
 ## Configuration
 
@@ -538,6 +538,43 @@ The plugin matches components by comparing:
 - Component: `title: "Callout"` → slug: `"callout"`  
 - Content: `type: "callout"` → **Match!** ✅
 
+### Default Values & Data Merging
+
+Components automatically merge their default values with the data you provide. This means you only need to specify the fields you want to override - any missing fields will use the defaults from the component file.
+
+**Example:**
+
+If your component has these defaults:
+```yaml
+---
+title: Callout
+heading: "Default Heading"
+description: "Default description"
+background: "light"
+links:
+  - linkUrl: "#"
+    linkText: "Default Link"
+---
+```
+
+And you use it with partial data:
+```liquid
+{% assign myCallout = {
+  type: "callout",
+  heading: "Custom Heading"
+} %}
+
+{{ myCallout | renderComponent: "liquid" }}
+```
+
+The component will render with:
+- `heading`: "Custom Heading" *(from your data)*
+- `description`: "Default description" *(from component default)*
+- `background`: "light" *(from component default)*  
+- `links`: Default links array *(from component default)*
+
+This ensures components always have complete data to work with, even when you only provide a subset of the required fields.
+
 ## Asset Bundling
 
 The plugin includes built-in CSS and JS bundling:
@@ -640,7 +677,7 @@ The template language parameter defaults to `"liquid"` if not specified.
 
 #### `renderComponent`
 
-Matches content items to component templates and renders them.
+Matches content items to component templates and renders them with automatic default value merging.
 
 **Parameters:**
 
@@ -650,6 +687,10 @@ Matches content items to component templates and renders them.
 **Returns:**
 
 - `string`: Fully rendered HTML content or empty string
+
+**Behavior:**
+
+The filter automatically merges component default values with your provided data. Any fields not specified in your data will use the default values from the component's frontmatter. This ensures components always have complete data to render properly.
 
 ## Contributing
 
