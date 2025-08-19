@@ -2,7 +2,7 @@
  * Default configuration options
  */
 export const defaultOptions = {
-  componentsDir: "src/components/*.njk",
+  componentsDir: "src/components/*.*",
   cssBundleDir: "./assets/styles/",
   jsBundleDir: "./assets/scripts/",
   collectionName: "components",

@@ -89,7 +89,7 @@ callout:
   background: warning
 ---
 
-{{ callout | renderComponent: "liquid" }}
+{{ callout | renderComponent }}
 ```
 
 </details>
@@ -105,7 +105,7 @@ callout:
 
 ```javascript
 const defaultOptions = {
-  componentsDir: "src/components/*.njk",
+  componentsDir: "src/components/*.*",
   cssBundleDir: "./assets/styles/",
   jsBundleDir: "./assets/scripts/",
   collectionName: "components",
@@ -144,7 +144,7 @@ components:
 ---
 
 <main>
-  {{ components | renderComponent: "liquid" }}
+  {{ components | renderComponent }}
 </main>
 ```
 
@@ -171,7 +171,7 @@ components:
 ---
 
 <main>
-  {{ components | renderComponent("njk") | safe }}
+  {{ components | renderComponent | safe }}
 </main>
 ```
 
@@ -198,7 +198,7 @@ components:
 ---
 
 <main>
-  {{ components |> renderComponent("vto") |> safe }}
+  {{ components |> renderComponent |> safe }}
 </main>
 ```
 
@@ -237,10 +237,10 @@ Define components inline within your template:
 ] %}
 
 <main>
-  {{ heroComponent | renderComponent: "liquid" }}
+  {{ heroComponent | renderComponent }}
   
   <section class="features">
-    {{ features | renderComponent: "liquid" }}
+  {{ features | renderComponent }}
   </section>
 </main>
 ```
@@ -276,10 +276,10 @@ Define components inline within your template:
 ] -%}
 
 <main>
-  {{ heroComponent | renderComponent("njk") | safe }}
+  {{ heroComponent | renderComponent | safe }}
   
   <section class="features">
-    {{ features | renderComponent("njk") | safe }}
+  {{ features | renderComponent | safe }}
   </section>
 </main>
 ```
@@ -315,10 +315,10 @@ Define components inline within your template:
 ] }}
 
 <main>
-  {{ heroComponent |> renderComponent("vto") |> safe }}
+  {{ heroComponent |> renderComponent |> safe }}
   
   <section class="features">
-    {{ features |> renderComponent("vto") |> safe }}
+  {{ features |> renderComponent |> safe }}
   </section>
 </main>
 ```
@@ -397,9 +397,9 @@ title: Homepage
 ---
 
 <main>
-  {{ homepage.hero | renderComponent: "liquid" }}
+  {{ homepage.hero | renderComponent }}
   
-  {{ homepage.sections | renderComponent: "liquid" }}
+  {{ homepage.sections | renderComponent }}
 </main>
 ```
 
@@ -416,9 +416,9 @@ title: Homepage
 ---
 
 <main>
-  {{ homepage.hero | renderComponent("njk") | safe }}
+  {{ homepage.hero | renderComponent | safe }}
   
-  {{ homepage.sections | renderComponent("njk") | safe }}
+  {{ homepage.sections | renderComponent | safe }}
 </main>
 ```
 
@@ -435,9 +435,9 @@ title: Homepage
 ---
 
 <main>
-  {{ homepage.hero |> renderComponent("vto") |> safe }}
+  {{ homepage.hero |> renderComponent |> safe }}
   
-  {{ homepage.sections |> renderComponent("vto") |> safe }}
+  {{ homepage.sections |> renderComponent |> safe }}
 </main>
 ```
 
@@ -653,9 +653,10 @@ type: "my-component"  <!-- must match! -->
 
 Make sure to specify the correct template language parameter for your template engine:
 
-- **Liquid**: `{{ item | renderComponent: "liquid" }}` (auto-escaped by default)
-- **Nunjucks**: `{{ item | renderComponent("njk") | safe }}`
-- **Vento**: `{{ item |> renderComponent("vto") |> safe }}`
+
+- **Liquid**: `{{ item | renderComponent }}` (auto-escaped by default)
+- **Nunjucks**: `{{ item | renderComponent | safe }}`
+- **Vento**: `{{ item |> renderComponent |> safe }}`
 
 If no template language is specified, the filter will use the calling template's language by default.
 
@@ -665,7 +666,7 @@ If no template language is specified, the filter will use the calling template's
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
-| `componentsDir` | `string` | `"src/components/*.njk"` | Glob pattern for component files |
+| `componentsDir` | `string` | `"src/components/*.*"` | Glob pattern for component files |
 | `cssBundleDir` | `string` | `"./assets/styles/"` | CSS bundle output directory |
 | `jsBundleDir` | `string` | `"./assets/scripts/"` | JS bundle output directory |
 | `collectionName` | `string` | `"components"` | Name of components collection |
