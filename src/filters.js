@@ -83,8 +83,7 @@ export function addFilters(eleventyConfig, options) {
    */
 
   // Render components filter - returns matched component templates
-  // Render components filter - returns matched component templates
-  eleventyConfig.addFilter("renderComponent", async function (items, templateLang = "liquid") {
+eleventyConfig.addFilter("renderComponent", async function (items, lang) {
     if (!items) {
       return '';
     }
@@ -120,7 +119,10 @@ export function addFilters(eleventyConfig, options) {
             // Merge component defaults with item data (item data takes precedence)
             const mergedData = { ...component.data, ...item };
 
-            // Render the component's rawInput with merged data using the specified template language
+            // If a language was passed to the filter as lang, use it, otherwise get the calling template's templateSyntax
+            const templateLang = lang || (this.page && this.page.templateSyntax);
+
+            // Render the component's rawInput with merged data using the determined template language
             const rendered = await renderFilter.call(this, component.rawInput, templateLang, mergedData);
             renderedComponents.push(rendered);
             break; // Move to next item after finding a match
