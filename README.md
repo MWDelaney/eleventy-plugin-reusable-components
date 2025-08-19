@@ -1,4 +1,4 @@
-# Universal Components for Eleventy Plugin
+# Reusable Components for Eleventy Plugin
 
 A configurable Eleventy plugin that enables a powerful component system for building dynamic, reusable UI components across your static site.
 
@@ -14,7 +14,7 @@ A configurable Eleventy plugin that enables a powerful component system for buil
 ## Installation
 
 ```bash
-npm install --save-dev eleventy-plugin-components
+npm install --save-dev eleventy-plugin-reusable-components
 ```
 
 ## Quick Start
@@ -26,7 +26,7 @@ npm install --save-dev eleventy-plugin-components
 
 ```javascript
 // eleventy.config.js
-import componentSystem from "eleventy-plugin-components";
+import componentSystem from "eleventy-plugin-reusable-components";
 
 export default function(eleventyConfig) {
   eleventyConfig.addPlugin(componentSystem);

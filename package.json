@@ -1,24 +1,31 @@
 {
-  "name": "eleventy-plugin-components",
-  "version": "3.0.1",
-  "description": "Eleventy plugin for components",
-  "main": ".eleventy.js",
-  "type": "module",
-  "engines": {
-    "node": ">=18.0.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/mwdelaney/eleventy-plugin-components.git"
-  },
-  "author": "MWDelaney (https://github.com/mwdelaney)",
-  "license": "MIT",
+  "name": "eleventy-plugin-reusable-components",
+  "version": "1.0.0",
+  "description": "A configurable Eleventy plugin that enables a powerful component system for building dynamic, reusable UI components across your static site.",
   "keywords": [
     "eleventy",
     "plugin",
     "components"
   ],
+  "homepage": "https://github.com/mwdelaney/eleventy-plugin-components#readme",
+  "bugs": {
+    "url": "https://github.com/mwdelaney/eleventy-plugin-components/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mwdelaney/eleventy-plugin-components.git"
+  },
+  "license": "MIT",
+  "author": "MWDelaney (https://github.com/mwdelaney)",
+  "type": "module",
+  "main": ".eleventy.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "peerDependencies": {
     "@11ty/eleventy": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
