@@ -117,8 +117,11 @@ export function addFilters(eleventyConfig, options) {
           const itemSlug = slugifyFilter(item.type);
 
           if (componentSlug === itemSlug) {
-            // Render the component's rawInput with item data using the specified template language
-            const rendered = await renderFilter.call(this, component.rawInput, templateLang, item);
+            // Merge component defaults with item data (item data takes precedence)
+            const mergedData = { ...component.data, ...item };
+
+            // Render the component's rawInput with merged data using the specified template language
+            const rendered = await renderFilter.call(this, component.rawInput, templateLang, mergedData);
             renderedComponents.push(rendered);
             break; // Move to next item after finding a match
           }
