@@ -14,7 +14,7 @@ A configurable Eleventy plugin that enables a powerful component system for buil
 ## Installation
 
 ```bash
-NOT AVAILABLE YET npm install eleventy-plugin-components
+npm install --save-dev eleventy-plugin-components
 ```
 
 ## Quick Start
