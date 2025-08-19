@@ -94,7 +94,7 @@ callout:
 
 </details>
 
-> **Note:** The `renderComponent` filter accepts a template language parameter (`"njk"`, `"liquid"`, `"vto"`, etc.) and can process both single components and arrays of components. If no template language is specified, it defaults to `"liquid"`. The filter automatically merges component default values with your provided data - any missing fields will use the defaults from the component file.
+> **Note:** The `renderComponent` filter accepts a template language parameter (`"njk"`, `"liquid"`, `"vto"`, etc.) and can process both single components and arrays of components. If no template language is specified, it defaults to the calling template's language. The filter automatically merges component default values with your provided data - any missing fields will use the defaults from the component file.
 
 ## Configuration
 
@@ -657,7 +657,7 @@ Make sure to specify the correct template language parameter for your template e
 - **Nunjucks**: `{{ item | renderComponent("njk") | safe }}`
 - **Vento**: `{{ item |> renderComponent("vto") |> safe }}`
 
-The template language parameter defaults to `"liquid"` if not specified.
+If no template language is specified, the filter will use the calling template's language by default.
 
 ## API Reference
 
@@ -682,7 +682,7 @@ Matches content items to component templates and renders them with automatic def
 **Parameters:**
 
 - `item` (Object|Array): Content item(s) with `type` property
-- `templateLang` (string): Optional. Template language ("njk", "liquid", "vto", etc.). Defaults to "liquid"
+- `templateLang` (string): Optional. Template language ("njk", "liquid", "vto", etc.). If not specified, defaults to the calling template's language.
 
 **Returns:**
 
