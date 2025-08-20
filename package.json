@@ -20,12 +20,15 @@
   "type": "module",
   "main": ".eleventy.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "test": "eslint src --ext .js,.ts"
   },
   "peerDependencies": {
     "@11ty/eleventy": "^3.0.0"
   },
   "engines": {
     "node": ">=18.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^9.33.0"
   }
 }

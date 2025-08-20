@@ -1,9 +1,8 @@
 /**
  * Add filters for the component system
  * @param {Object} eleventyConfig - Eleventy configuration object
- * @param {Object} options - Plugin options
  */
-export function addFilters(eleventyConfig, options) {
+export function addFilters(eleventyConfig) {
   /**
    * Render Component Filter
    *
@@ -83,9 +82,9 @@ export function addFilters(eleventyConfig, options) {
    */
 
   // Render components filter - returns matched component templates
-eleventyConfig.addFilter("renderComponent", async function (items, lang) {
+  eleventyConfig.addFilter("renderComponent", async function (items, lang) {
     if (!items) {
-      return '';
+      return "";
     }
 
     // Normalize input to always be an array
@@ -95,12 +94,12 @@ eleventyConfig.addFilter("renderComponent", async function (items, lang) {
     const validItems = itemsArray.filter(item => item && item.type);
 
     if (validItems.length === 0) {
-      return '';
+      return "";
     }
 
     const collections = this.ctx.collections || this.collections;
     if (!collections || !collections.components) {
-      return '';
+      return "";
     }
 
     const slugifyFilter = eleventyConfig.getFilter("slugify");
@@ -132,6 +131,6 @@ eleventyConfig.addFilter("renderComponent", async function (items, lang) {
     }
 
     // Join all rendered components with newlines
-    return renderedComponents.join('\n');
-  })
+    return renderedComponents.join("\n");
+  });
 }
