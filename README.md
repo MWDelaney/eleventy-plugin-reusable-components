@@ -39,7 +39,7 @@ export default function(eleventyConfig) {
 Create a component file at `src/components/callout.liquid`:
 
 <details open>
-<summary>View component template</summary>
+<summary>View Liquid component template</summary>
 
 ```liquid
 ---
@@ -68,12 +68,103 @@ background: light
 
 </details>
 
+<details>
+<summary>View Nunjucks component template</summary>
+
+```njk
+---
+title: Callout
+
+# Default values
+heading: Lorem ipsum dolor sit
+description: A callout component to highlight important information.
+links:
+  - linkUrl: "#"
+    linkText: Learn more
+background: light
+---
+<div class="callout callout--{{ background }}">
+  <h3 class="callout__heading">{{ heading }}</h3>
+  <p class="callout__description">{{ description }}</p>
+  {% if links %}
+    <div class="callout__links">
+      {% for link in links %}
+        <a href="{{ link.linkUrl }}" class="callout__link">{{ link.linkText }}</a>
+      {% endfor %}
+    </div>
+  {% endif %}
+</div>
+```
+
+</details>
+
+<details>
+<summary>View WebC component template</summary>
+
+```html
+---
+title: Callout
+
+# Default values
+heading: Lorem ipsum dolor sit
+description: A callout component to highlight important information.
+links:
+  - linkUrl: "#"
+    linkText: Learn more
+background: light
+---
+<div :class="`callout callout--${background}`">
+  <h3 class="callout__heading" @text="heading"></h3>
+  <p class="callout__description" @text="description"></p>
+  <div class="callout__links" webc:if="links">
+    <a 
+      :href="link.linkUrl" 
+      class="callout__link" 
+      @text="link.linkText"
+      webc:for="link of links">
+    </a>
+  </div>
+</div>
+```
+
+</details>
+
+<details>
+<summary>View Vento component template</summary>
+
+```vento
+---
+title: Callout
+
+# Default values
+heading: Lorem ipsum dolor sit
+description: A callout component to highlight important information.
+links:
+  - linkUrl: "#"
+    linkText: Learn more
+background: light
+---
+<div class="callout callout--{{ background }}">
+  <h3 class="callout__heading">{{ heading }}</h3>
+  <p class="callout__description">{{ description }}</p>
+  {{ if links }}
+    <div class="callout__links">
+      {{ for link of links }}
+        <a href="{{ link.linkUrl }}" class="callout__link">{{ link.linkText }}</a>
+      {{ /for }}
+    </div>
+  {{ /if }}
+</div>
+```
+
+</details>
+
 ### 3. Use the Component
 
 In any template, use the `renderComponent` filter:
 
 <details open>
-<summary>View usage example</summary>
+<summary>View Liquid usage example</summary>
 
 ```liquid
 ---
@@ -94,6 +185,199 @@ callout:
 ```
 
 </details>
+
+<details>
+<summary>View Nunjucks usage example</summary>
+
+```njk
+---
+title: My Page
+
+# Callout component data
+callout:
+  type: callout
+  heading: Help organize the 11ty Meetup!
+  description: A callout component to highlight important information.
+  links:
+    - linkUrl: https://11tymeetup.dev/
+      linkText: Join the 11ty Meetup!
+  background: warning
+---
+
+{{ callout | renderComponent | safe }}
+```
+
+</details>
+
+<details>
+<summary>View WebC usage example</summary>
+
+```html
+---
+title: My Page
+
+# Callout component data
+callout:
+  type: callout
+  heading: Help organize the 11ty Meetup!
+  description: A callout component to highlight important information.
+  links:
+    - linkUrl: https://11tymeetup.dev/
+      linkText: Join the 11ty Meetup!
+  background: warning
+---
+
+<template @html="callout | renderComponent"></template>
+```
+
+</details>
+
+<details>
+<summary>View Vento usage example</summary>
+
+```vento
+---
+title: My Page
+
+# Callout component data
+callout:
+  type: callout
+  heading: Help organize the 11ty Meetup!
+  description: A callout component to highlight important information.
+  links:
+    - linkUrl: https://11tymeetup.dev/
+      linkText: Join the 11ty Meetup!
+  background: warning
+---
+
+{{ callout |> renderComponent |> safe }}
+```
+
+</details>
+
+### 4. Render Multiple Components
+You can render multiple components by passing an array of component data:
+
+<details open>
+<summary>View Liquid multiple components example</summary>
+
+```liquid
+---
+title: My Page
+
+# Mixed component data
+components:
+  - type: callout
+    heading: Help organize the 11ty Meetup!
+    description: A callout component to highlight important information.
+    links:
+      - linkUrl: https://11tymeetup.dev/
+        linkText: Join the 11ty Meetup!
+    background: warning
+
+  - type: text-and-image
+    heading: About Our Community
+    description: Join thousands of developers building amazing things with Eleventy.
+    image: /assets/images/community.jpg
+    imageAlt: Community members collaborating
+    layout: image-right
+---
+
+{{ components | renderComponent }}
+```
+
+</details>
+
+<details>
+<summary>View Nunjucks multiple components example</summary>
+
+```njk
+---
+title: My Page
+
+# Mixed component data
+components:
+  - type: callout
+    heading: Help organize the 11ty Meetup!
+    description: A callout component to highlight important information.
+    links:
+      - linkUrl: https://11tymeetup.dev/
+        linkText: Join the 11ty Meetup!
+    background: warning
+
+  - type: text-and-image
+    heading: About Our Community
+    description: Join thousands of developers building amazing things with Eleventy.
+    image: /assets/images/community.jpg
+    imageAlt: Community members collaborating
+    layout: image-right
+---
+
+{{ components | renderComponent | safe }}
+```
+
+</details>
+
+<details>
+<summary>View WebC multiple components example</summary>
+
+```html
+---
+title: My Page
+
+# Mixed component data
+components:
+  - type: callout
+    heading: Help organize the 11ty Meetup!
+    description: A callout component to highlight important information.
+    links:
+      - linkUrl: https://11tymeetup.dev/
+        linkText: Join the 11ty Meetup!
+    background: warning
+
+  - type: text-and-image
+    heading: About Our Community
+    description: Join thousands of developers building amazing things with Eleventy.
+    image: /assets/images/community.jpg
+    imageAlt: Community members collaborating
+    layout: image-right
+---
+
+<template @html="components | renderComponent"></template>
+```
+
+</details>
+
+<details>
+<summary>View Vento multiple components example</summary>
+
+```vento
+---
+title: My Page
+
+# Mixed component data
+components:
+  - type: callout
+    heading: Help organize the 11ty Meetup!
+    description: A callout component to highlight important information.
+    links:
+      - linkUrl: https://11tymeetup.dev/
+        linkText: Join the 11ty Meetup!
+    background: warning
+
+  - type: text-and-image
+    heading: About Our Community
+    description: Join thousands of developers building amazing things with Eleventy.
+    image: /assets/images/community.jpg
+    imageAlt: Community members collaborating
+    layout: image-right
+---
+
+{{ components |> renderComponent |> safe }}
+```
+
+</details>
+
 
 > **Note:** The `renderComponent` filter accepts a template language parameter (`"njk"`, `"liquid"`, `"webc"`, `"vto"`, etc.) and can process both single components and arrays of components. The filter automatically merges component default values with your provided data - any missing fields will use the defaults from the component file.
 
@@ -161,6 +445,7 @@ components:
     heading: Welcome!
     description: Thanks for visiting our site
     background: primary
+
   - type: text-and-image
     heading: About Us
     description: Learn more about our company
@@ -188,6 +473,7 @@ components:
     heading: Welcome!
     description: Thanks for visiting our site
     background: primary
+
   - type: text-and-image
     heading: About Us
     description: Learn more about our company
@@ -215,6 +501,7 @@ components:
     heading: Welcome!
     description: Thanks for visiting our site
     background: primary
+
   - type: text-and-image
     heading: About Us
     description: Learn more about our company
@@ -538,6 +825,7 @@ Components should follow this structure:
 ```liquid
 ---
 title: ComponentName
+
 # Default values
 heading: "default heading"
 description: "default description"
@@ -578,6 +866,8 @@ If your component has these defaults:
 ```yaml
 ---
 title: Callout
+
+# Default values
 heading: "Default Heading"
 description: "Default description"
 background: "light"
