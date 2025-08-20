@@ -416,6 +416,7 @@ components:
     heading: Welcome!
     description: Thanks for visiting our site
     background: primary
+    
   - type: text-and-image
     heading: About Us
     description: Learn more about our company
