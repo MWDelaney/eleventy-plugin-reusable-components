@@ -1,7 +1,7 @@
 {
   "name": "eleventy-plugin-reusable-components",
-  "version": "1.0.0",
-  "description": "A configurable Eleventy plugin that enables a powerful component system for building dynamic, reusable UI components across your static site.",
+  "version": "1.0.1",
+  "description": "A configurable Eleventy plugin that enables a powerful component system for building dynamic, reusable HTML components across your static site.",
   "keywords": [
     "eleventy",
     "plugin",
