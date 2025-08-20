@@ -1,13 +1,12 @@
 # Reusable Components for Eleventy Plugin
 
 [![npm version](https://img.shields.io/npm/v/eleventy-plugin-reusable-components.svg)](https://www.npmjs.com/package/eleventy-plugin-reusable-components)
-[![Tests](https://github.com/MWDelaney/eleventy-plugin-components/workflows/🧪%20Run%20Tests/badge.svg)](https://github.com/MWDelaney/eleventy-plugin-components/actions)
+[![Tests](https://github.com/MWDelaney/eleventy-plugin-components/workflows/🧪%20Run%20Tests/badge.svg)](https://github.com/MWDelaney/eleventy-plugin-components/actions) 
+🎈🐀
 
 A configurable [Eleventy](https://www.11ty.dev/) plugin that enables a powerful component system for building dynamic, reusable HTML components across your static site.
 
 👉 Build your components once and use them anywhere.
-
-🎈🐀
 
 ## Features
 
