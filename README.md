@@ -46,11 +46,11 @@ Create a component file at `src/components/callout.liquid`:
 title: Callout
 
 # Default values
-heading: Help organize the 11ty Meetup!
+heading: Lorem ipsum dolor sit
 description: A callout component to highlight important information.
 links:
-  - linkUrl: https://11tymeetup.dev/
-    linkText: Join the 11ty Meetup!
+  - linkUrl: "#"
+    linkText: Learn more
 background: light
 ---
 <div class="callout callout--{{ background }}">
@@ -78,13 +78,15 @@ In any template, use the `renderComponent` filter:
 ```liquid
 ---
 title: My Page
+
+# Callout component data
 callout:
   type: callout
-  heading: Important Notice
-  description: This is a callout example
+  heading: Help organize the 11ty Meetup!
+  description: A callout component to highlight important information.
   links:
-    - linkUrl: "#"
-      linkText: Learn more
+    - linkUrl: https://11tymeetup.dev/
+      linkText: Join the 11ty Meetup!
   background: warning
 ---
 
@@ -93,7 +95,7 @@ callout:
 
 </details>
 
-> **Note:** The `renderComponent` filter accepts a template language parameter (`"njk"`, `"liquid"`, `"webc"`, `"vto"`, etc.) and can process both single components and arrays of components. If no template language is specified, it defaults to the calling template's language. The filter automatically merges component default values with your provided data - any missing fields will use the defaults from the component file.
+> **Note:** The `renderComponent` filter accepts a template language parameter (`"njk"`, `"liquid"`, `"webc"`, `"vto"`, etc.) and can process both single components and arrays of components. The filter automatically merges component default values with your provided data - any missing fields will use the defaults from the component file.
 
 ## Configuration
 
