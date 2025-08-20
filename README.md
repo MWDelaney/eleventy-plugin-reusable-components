@@ -405,8 +405,6 @@ const defaultOptions = {
 
 Define components directly in your page's frontmatter:
 
-#### Liquid (Frontmatter)
-
 <details open>
 <summary>View Liquid frontmatter example</summary>
 
@@ -431,8 +429,6 @@ components:
 ```
 
 </details>
-
-#### Nunjucks (Frontmatter)
 
 <details>
 <summary>View Nunjucks frontmatter example</summary>
@@ -460,8 +456,6 @@ components:
 
 </details>
 
-#### WebC (Frontmatter)
-
 <details>
 <summary>View WebC frontmatter example</summary>
 
@@ -487,8 +481,6 @@ components:
 ```
 
 </details>
-
-#### Vento (Frontmatter)
 
 <details>
 <summary>View Vento frontmatter example</summary>
@@ -519,8 +511,6 @@ components:
 ### Method 2: Inline Definition
 
 Define components inline within your template:
-
-#### Liquid (Inline Definition)
 
 <details open>
 <summary>View Liquid inline definition example</summary>
@@ -559,8 +549,6 @@ Define components inline within your template:
 
 </details>
 
-#### Nunjucks (Inline Definition)
-
 <details>
 <summary>View Nunjucks inline definition example</summary>
 
@@ -597,8 +585,6 @@ Define components inline within your template:
 ```
 
 </details>
-
-#### WebC (Inline Definition)
 
 <details>
 <summary>View WebC inline definition example</summary>
@@ -638,8 +624,6 @@ const features = [
 ```
 
 </details>
-
-#### Vento (Inline Definition)
 
 <details>
 <summary>View Vento inline definition example</summary>
@@ -739,8 +723,6 @@ Store component data in separate JSON files for better organization:
 
 #### Template Usage
 
-**Liquid (`index.liquid`):**
-
 <details open>
 <summary>View Liquid template usage</summary>
 
@@ -757,8 +739,6 @@ title: Homepage
 ```
 
 </details>
-
-**Nunjucks (`index.njk`):**
 
 <details>
 <summary>View Nunjucks template usage</summary>
@@ -777,8 +757,6 @@ title: Homepage
 
 </details>
 
-**WebC (`index.webc`):**
-
 <details>
 <summary>View WebC template usage</summary>
 
@@ -795,8 +773,6 @@ title: Homepage
 ```
 
 </details>
-
-**Vento (`index.vto`):**
 
 <details>
 <summary>View Vento template usage</summary>
