@@ -20,6 +20,8 @@ npm install eleventy-plugin-reusable-components
 
 ### 1. Add the Plugin
 
+Add the plugin to your Eleventy configuration file (`.eleventy.js` or `eleventy.config.js`).
+
 <details open>
 <summary>View configuration code</summary>
 
