@@ -1,7 +1,6 @@
 import { EleventyRenderPlugin } from "@11ty/eleventy";
 import { defaultOptions } from "./config.js";
 import { addCollections } from "./collections.js";
-import { addBundles } from "./bundles.js";
 import { addFilters } from "./filters.js";
 
 /**
@@ -11,11 +10,8 @@ import { addFilters } from "./filters.js";
  *
  * @param {Object} options - Configuration options for the plugin
  * @param {string} [options.componentsDir="src/assets/components/*.njk"] - Glob pattern for component files
- * @param {string} [options.cssBundleDir="./assets/styles/"] - Directory for CSS bundle output
- * @param {string} [options.jsBundleDir="./assets/scripts/"] - Directory for JS bundle output
  * @param {string} [options.collectionName="components"] - Name of the components collection
  * @param {boolean} [options.enableRenderPlugin=true] - Whether to enable the Eleventy Render Plugin
- * @param {boolean} [options.enableBundles=true] - Whether to enable CSS and JS bundles
  * @param {boolean} [options.excludeFromProduction=true] - Whether to exclude components from production builds
  *
  * Collections:
@@ -24,9 +20,6 @@ import { addFilters } from "./filters.js";
  * Plugins:
  * - `EleventyRenderPlugin`: A plugin for advanced rendering capabilities in Eleventy.
  *
- * Bundling:
- * - CSS: Bundles CSS files into the configured CSS bundle directory.
- * - JS: Bundles JavaScript files into the configured JS bundle directory.
  */
 export function eleventyComponentsPlugin(eleventyConfig, userOptions = {}) {
   // Merge user options with defaults
@@ -49,9 +42,6 @@ export function eleventyComponentsPlugin(eleventyConfig, userOptions = {}) {
 
   // Add collections
   addCollections(eleventyConfig, options);
-
-  // Add bundles
-  addBundles(eleventyConfig, options);
 
   // Add filters
   addFilters(eleventyConfig, options);

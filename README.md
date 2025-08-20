@@ -6,7 +6,6 @@ A configurable Eleventy plugin that enables a powerful component system for buil
 
 - 🧩 **Dynamic Component Rendering** - Render components based on content data
 - 🎨 **Template Language Agnostic** - Works with Nunjucks, Liquid, Vento, and more
-- 📦 **Asset Bundling** - Built-in CSS and JS bundling for components
 - 🏗️ **Flexible Configuration** - Customizable directories and options
 - 🚀 **Production Ready** - Excludes development components from production builds
 - 🔧 **Developer Friendly** - Comprehensive error handling and debugging
@@ -106,11 +105,8 @@ callout:
 ```javascript
 const defaultOptions = {
   componentsDir: "src/components/*.*",
-  cssBundleDir: "./assets/styles/",
-  jsBundleDir: "./assets/scripts/",
   collectionName: "components",
   enableRenderPlugin: true,
-  enableBundles: true,
   excludeFromProduction: true
 };
 ```
@@ -467,61 +463,6 @@ description: "default description"
 
 </details>
 
-### Components with Bundled Assets
-
-Create components with their own CSS and JS that get automatically bundled:
-
-<details open>
-<summary>View component with bundled assets example</summary>
-
-**Component file: `src/components/text-and-image.liquid`**
-
-```liquid
----
-title: Text and Image
-
-# Default values
-heading: Text and image component
-description: A component that combines text and an image.
-image: /assets/images/possums.jpg
-imageAlt: A cute possum
-imagePosition: left
-background: warning
----
-
-<!-- Component HTML, using the default values above -->
-<section class="block block-text-and-image background-{{ background }} text-bg-{{ background }} py-5">
-  <div class="container px-5">
-    <div class="row row-cols-2 align-items-center">
-      <article class="col">
-        <h2>{{ heading }}</h2>
-        {{ description }}
-      </article>
-      <figure class="col">
-        <img src="{{ image }}" class="img-fluid rounded shadow" alt="{{ imageAlt }}" />
-      </figure>
-    </div>
-  </div>
-</section>
-
-<!-- Component CSS -->
-{% css %}
-.block-text-and-image {
-  figure img {
-    --bs-border-radius: 1rem;
-    transform: rotate(6deg);
-  }
-}
-{% endcss %}
-
-<!-- Component JS -->
-{% js %}
-console.log('🪐');
-{% endjs %}
-```
-
-</details>
-
 ### Required Frontmatter
 
 - `title`: Used for component matching (gets slugified)
@@ -574,34 +515,6 @@ The component will render with:
 - `links`: Default links array *(from component default)*
 
 This ensures components always have complete data to work with, even when you only provide a subset of the required fields.
-
-## Asset Bundling
-
-The plugin includes built-in CSS and JS bundling:
-
-### CSS Bundling
-
-<details open>
-<summary>View CSS bundling example</summary>
-
-```liquid
-<!-- In your layout template -->
-<link rel="stylesheet" href="{% getBundleFileUrl 'componentCss' %}">
-```
-
-</details>
-
-### JS Bundling
-
-<details open>
-<summary>View JS bundling example</summary>
-
-```liquid
-<!-- In your layout template -->
-<script src="{% getBundleFileUrl 'componentJs' %}"></script>
-```
-
-</details>
 
 ## Error Handling
 
@@ -667,11 +580,8 @@ If no template language is specified, the filter will use the calling template's
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
 | `componentsDir` | `string` | `"src/components/*.*"` | Glob pattern for component files |
-| `cssBundleDir` | `string` | `"./assets/styles/"` | CSS bundle output directory |
-| `jsBundleDir` | `string` | `"./assets/scripts/"` | JS bundle output directory |
 | `collectionName` | `string` | `"components"` | Name of components collection |
 | `enableRenderPlugin` | `boolean` | `true` | Enable Eleventy Render Plugin |
-| `enableBundles` | `boolean` | `true` | Enable CSS/JS bundling |
 | `excludeFromProduction` | `boolean` | `true` | Exclude components from production |
 
 ### Filters
