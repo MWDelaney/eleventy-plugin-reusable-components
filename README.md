@@ -5,7 +5,7 @@ A configurable Eleventy plugin that enables a powerful component system for buil
 ## Features
 
 - 🧩 **Dynamic Component Rendering** - Render components based on content data
-- 🎨 **Template Language Agnostic** - Works with Nunjucks, Liquid, Vento, and more
+- 🎨 **Template Language Agnostic** - Works with Nunjucks, Liquid, WebC, Vento, and more
 - 🏗️ **Flexible Configuration** - Customizable directories and options
 - 🚀 **Production Ready** - Excludes development components from production builds
 - 🔧 **Developer Friendly** - Comprehensive error handling and debugging
@@ -93,7 +93,7 @@ callout:
 
 </details>
 
-> **Note:** The `renderComponent` filter accepts a template language parameter (`"njk"`, `"liquid"`, `"vto"`, etc.) and can process both single components and arrays of components. If no template language is specified, it defaults to the calling template's language. The filter automatically merges component default values with your provided data - any missing fields will use the defaults from the component file.
+> **Note:** The `renderComponent` filter accepts a template language parameter (`"njk"`, `"liquid"`, `"webc"`, `"vto"`, etc.) and can process both single components and arrays of components. If no template language is specified, it defaults to the calling template's language. The filter automatically merges component default values with your provided data - any missing fields will use the defaults from the component file.
 
 ## Configuration
 
@@ -168,6 +168,33 @@ components:
 
 <main>
   {{ components | renderComponent | safe }}
+</main>
+```
+
+</details>
+
+#### WebC (Frontmatter)
+
+<details>
+<summary>View WebC frontmatter example</summary>
+
+```html
+---
+title: My Page
+components:
+  - type: callout
+    heading: Welcome!
+    description: Thanks for visiting our site
+    background: primary
+  - type: text-and-image
+    heading: About Us
+    description: Learn more about our company
+    image: /assets/images/about.jpg
+    imageAlt: About our company
+---
+
+<main>
+  <template @html="components | renderComponent"></template>
 </main>
 ```
 
@@ -276,6 +303,47 @@ Define components inline within your template:
   
   <section class="features">
   {{ features | renderComponent | safe }}
+  </section>
+</main>
+```
+
+</details>
+
+#### WebC (Inline Definition)
+
+<details>
+<summary>View WebC inline definition example</summary>
+
+```html
+<script webc:setup>
+const heroComponent = {
+  type: "hero",
+  heading: "Welcome to Our Site",
+  description: "Thanks for visiting! We're excited to share our content with you.",
+  background: "primary"
+};
+
+const features = [
+  {
+    type: "callout",
+    heading: "Fast Performance",
+    description: "Built for speed and efficiency.",
+    background: "success"
+  },
+  {
+    type: "callout",
+    heading: "Easy to Use",
+    description: "Simple and intuitive interface.",
+    background: "info"
+  }
+];
+</script>
+
+<main>
+  <template @html="heroComponent | renderComponent"></template>
+  
+  <section class="features">
+    <template @html="features | renderComponent"></template>
   </section>
 </main>
 ```
@@ -415,6 +483,25 @@ title: Homepage
   {{ homepage.hero | renderComponent | safe }}
   
   {{ homepage.sections | renderComponent | safe }}
+</main>
+```
+
+</details>
+
+**WebC (`index.webc`):**
+
+<details>
+<summary>View WebC template usage</summary>
+
+```html
+---
+title: Homepage
+---
+
+<main>
+  <template @html="homepage.hero | renderComponent"></template>
+  
+  <template @html="homepage.sections | renderComponent"></template>
 </main>
 ```
 
@@ -569,6 +656,7 @@ Make sure to specify the correct template language parameter for your template e
 
 - **Liquid**: `{{ item | renderComponent }}` (auto-escaped by default)
 - **Nunjucks**: `{{ item | renderComponent | safe }}`
+- **WebC**: `<template @html="item | renderComponent"></template>`
 - **Vento**: `{{ item |> renderComponent |> safe }}`
 
 If no template language is specified, the filter will use the calling template's language by default.
@@ -593,7 +681,7 @@ Matches content items to component templates and renders them with automatic def
 **Parameters:**
 
 - `item` (Object|Array): Content item(s) with `type` property
-- `templateLang` (string): Optional. Template language ("njk", "liquid", "vto", etc.). If not specified, defaults to the calling template's language.
+- `templateLang` (string): Optional. Template language ("njk", "liquid", "webc", "vto", etc.). If not specified, defaults to the calling template's language.
 
 **Returns:**
 
