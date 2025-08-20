@@ -13,7 +13,7 @@ A configurable Eleventy plugin that enables a powerful component system for buil
 ## Installation
 
 ```bash
-npm install --save-dev eleventy-plugin-reusable-components
+npm install eleventy-plugin-reusable-components
 ```
 
 ## Quick Start
@@ -416,7 +416,7 @@ components:
     heading: Welcome!
     description: Thanks for visiting our site
     background: primary
-    
+
   - type: text-and-image
     heading: About Us
     description: Learn more about our company
