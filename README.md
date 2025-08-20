@@ -508,7 +508,7 @@ components:
 
 </details>
 
-### Method 2: Inline Definition
+### Method 2: Inline
 
 Define components inline within your template:
 
