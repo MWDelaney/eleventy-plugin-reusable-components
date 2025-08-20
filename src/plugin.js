@@ -21,7 +21,7 @@ import { addFilters } from "./filters.js";
  * - `EleventyRenderPlugin`: A plugin for advanced rendering capabilities in Eleventy.
  *
  */
-export function eleventyComponentsPlugin(eleventyConfig, userOptions = {}) {
+export function reusableComponents(eleventyConfig, userOptions = {}) {
   // Merge user options with defaults
   const options = { ...defaultOptions, ...userOptions };
 

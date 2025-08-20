@@ -1,6 +1,8 @@
 # Reusable Components for Eleventy Plugin
 
-A configurable Eleventy plugin that enables a powerful component system for building dynamic, reusable UI components across your static site.
+A configurable [Eleventy](https://www.11ty.dev/) plugin that enables a powerful component system for building dynamic, reusable HTML components across your static site.
+
+👉 Build your components once and use them anywhere.
 
 ## Features
 
@@ -27,10 +29,10 @@ Add the plugin to your Eleventy configuration file (`.eleventy.js` or `eleventy.
 
 ```javascript
 // eleventy.config.js
-import componentSystem from "eleventy-plugin-reusable-components";
+import reusableComponents from "eleventy-plugin-reusable-components";
 
 export default function(eleventyConfig) {
-  eleventyConfig.addPlugin(componentSystem);
+  eleventyConfig.addPlugin(reusableComponents);
 }
 ```
 
@@ -379,7 +381,6 @@ components:
 ```
 
 </details>
-
 
 > **Note:** The `renderComponent` filter accepts a template language parameter (`"njk"`, `"liquid"`, `"webc"`, `"vto"`, etc.) and can process both single components and arrays of components. The filter automatically merges component default values with your provided data - any missing fields will use the defaults from the component file.
 
