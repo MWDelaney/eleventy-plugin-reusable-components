@@ -60,6 +60,7 @@ links:
     linkText: Learn more
 background: light
 ---
+
 <div class="callout callout--{{ background }}">
   <h3 class="callout__heading">{{ heading }}</h3>
   <p class="callout__description">{{ description }}</p>
@@ -90,6 +91,7 @@ links:
     linkText: Learn more
 background: light
 ---
+
 <div class="callout callout--{{ background }}">
   <h3 class="callout__heading">{{ heading }}</h3>
   <p class="callout__description">{{ description }}</p>
@@ -120,6 +122,7 @@ links:
     linkText: Learn more
 background: light
 ---
+
 <div :class="`callout callout--${background}`">
   <h3 class="callout__heading" @text="heading"></h3>
   <p class="callout__description" @text="description"></p>
@@ -151,6 +154,7 @@ links:
     linkText: Learn more
 background: light
 ---
+
 <div class="callout callout--{{ background }}">
   <h3 class="callout__heading">{{ heading }}</h3>
   <p class="callout__description">{{ description }}</p>
