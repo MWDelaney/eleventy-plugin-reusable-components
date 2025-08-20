@@ -7,6 +7,8 @@ A configurable [Eleventy](https://www.11ty.dev/) plugin that enables a powerful 
 
 👉 Build your components once and use them anywhere.
 
+🎈🐀
+
 ## Features
 
 - 🧩 **Dynamic Component Rendering** - Render components based on content data
