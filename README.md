@@ -28,7 +28,6 @@ Add the plugin to your Eleventy configuration file (`.eleventy.js` or `eleventy.
 <summary>View configuration code</summary>
 
 ```javascript
-// eleventy.config.js
 import reusableComponents from "eleventy-plugin-reusable-components";
 
 export default function(eleventyConfig) {
