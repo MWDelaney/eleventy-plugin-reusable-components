@@ -179,6 +179,25 @@ In any template, use the `renderComponent` filter:
 <summary>View Liquid usage example</summary>
 
 ```liquid
+{{-
+  {
+    "type": "callout",
+    "heading": "Help organize the 11ty Meetup!",
+    "description": "A callout component to highlight important information.",
+    "links": [
+      {
+        "linkUrl": "https://11tymeetup.dev/",
+        "linkText": "Join the 11ty Meetup!"
+      }
+    ],
+    "background": "warning"
+  } | renderComponent
+-}}
+```
+
+Or from frontmatter:
+
+```liquid
 ---
 title: My Page
 
@@ -200,6 +219,25 @@ callout:
 
 <details>
 <summary>View Nunjucks usage example</summary>
+
+```njk
+{{-
+  {
+    "type": "callout",
+    "heading": "Help organize the 11ty Meetup!",
+    "description": "A callout component to highlight important information.",
+    "links": [
+      {
+        "linkUrl": "https://11tymeetup.dev/",
+        "linkText": "Join the 11ty Meetup!"
+      }
+    ],
+    "background": "warning"
+  } | renderComponent | safe
+-}}
+```
+
+Or from frontmatter:
 
 ```njk
 ---
@@ -225,6 +263,23 @@ callout:
 <summary>View WebC usage example</summary>
 
 ```html
+<template @html="{
+  'type': 'callout',
+  'heading': 'Help organize the 11ty Meetup!',
+  'description': 'A callout component to highlight important information.',
+  'links': [
+    {
+      'linkUrl': 'https://11tymeetup.dev/',
+      'linkText': 'Join the 11ty Meetup!'
+    }
+  ],
+  'background': 'warning'
+} | renderComponent"></template>
+```
+
+Or from frontmatter:
+
+```html
 ---
 title: My Page
 
@@ -246,6 +301,25 @@ callout:
 
 <details>
 <summary>View Vento usage example</summary>
+
+```vento
+{{-
+  {
+    "type": "callout",
+    "heading": "Help organize the 11ty Meetup!",
+    "description": "A callout component to highlight important information.",
+    "links": [
+      {
+        "linkUrl": "https://11tymeetup.dev/",
+        "linkText": "Join the 11ty Meetup!"
+      }
+    ],
+    "background": "warning"
+  } |> renderComponent |> safe
+-}}
+```
+
+Or from frontmatter:
 
 ```vento
 ---
